@@ -7,6 +7,10 @@ import baxtiyor.hotel.hotelmanagment.mapper.HotelMapper;
 import baxtiyor.hotel.hotelmanagment.repo.HotelRepository;
 import baxtiyor.hotel.hotelmanagment.service.HotelService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,9 +23,14 @@ public class HotelServiceImpl implements HotelService {
     private final HotelRepository repository;
     private final HotelMapper hotelMapper;
     @Override
-    public List<HotelResDto> getHotels() {
-        List<Hotel> hotelList = repository.findActiveHotels();
-        return hotelList.stream().map(hotelMapper::toDto).toList();
+    public Page<HotelResDto> getHotels(int page, int size) {
+        Pageable pageable = PageRequest.of(page,size);
+        Page<Hotel> hotelPage = repository.findActiveHotels(pageable);
+        List<HotelResDto> hotelResDtoList = hotelPage
+                .stream()
+                .map(hotelMapper::toDto)
+                .toList();
+        return new PageImpl<>(hotelResDtoList, pageable, hotelPage.getTotalElements());
     }
 
     @Override
