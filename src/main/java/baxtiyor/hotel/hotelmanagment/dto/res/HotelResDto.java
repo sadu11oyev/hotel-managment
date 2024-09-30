@@ -1,6 +1,7 @@
 package baxtiyor.hotel.hotelmanagment.dto.res;
 
 import lombok.Value;
+import org.hibernate.validator.constraints.URL;
 
 import java.io.Serializable;
 import java.util.UUID;

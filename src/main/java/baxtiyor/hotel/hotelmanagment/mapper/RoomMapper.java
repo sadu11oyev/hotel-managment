@@ -9,8 +9,17 @@ import org.mapstruct.*;
 public interface RoomMapper {
     Room toEntity(RoomReqDto roomReqDto);
 
-    RoomResDto toResDto(Room room);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Room partialUpdate(RoomReqDto roomReqDto, @MappingTarget Room room);
+
+    @Mapping(source = "hotelId", target = "hotel.id")
+    Room toEntity(RoomResDto roomResDto);
+
+    @Mapping(source = "hotel.id", target = "hotelId")
+    RoomResDto toResDto(Room room);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(source = "hotelId", target = "hotel.id")
+    Room partialUpdate(RoomResDto roomResDto, @MappingTarget Room room);
 }

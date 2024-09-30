@@ -1,6 +1,5 @@
 package baxtiyor.hotel.hotelmanagment.controller;
 
-import baxtiyor.hotel.hotelmanagment.config.AuditorAware;
 import baxtiyor.hotel.hotelmanagment.dto.req.UserReqDto;
 import baxtiyor.hotel.hotelmanagment.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +15,8 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<?> getUser(){
-        return ResponseEntity.ok(userService.getUser());
-    }
+    public ResponseEntity<?> getUser(){return ResponseEntity.ok(userService.getUser());}
+
     @PutMapping
     public ResponseEntity<?> editUser(UserReqDto reqDto){
         return ResponseEntity.ok(userService.editUser(reqDto));
