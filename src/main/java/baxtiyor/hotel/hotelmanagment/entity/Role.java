@@ -1,14 +1,15 @@
 package baxtiyor.hotel.hotelmanagment.entity;
 
-import baxtiyor.hotel.hotelmanagment.entity.BaseEntity;
 import baxtiyor.hotel.hotelmanagment.entity.enums.RoleName;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {

@@ -1,7 +1,6 @@
 package baxtiyor.hotel.hotelmanagment.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -21,7 +20,7 @@ public class Order extends BaseEntity {
     private Room room;
 
     @ManyToOne
-    private User customer;
+    private User user;
 
     private Double totalPrice;
     private LocalDate checkInDate;

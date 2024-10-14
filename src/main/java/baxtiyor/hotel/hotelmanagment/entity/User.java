@@ -1,11 +1,7 @@
 package baxtiyor.hotel.hotelmanagment.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,18 +10,23 @@ import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
+@Builder
 @Table(name = "users")
 public class User extends BaseEntity implements UserDetails {
 
     private String firstName;
     private String lastName;
     private String email;
+
+    @Column(unique = true)
     private String password;
     private String phoneNumber;
     private Boolean isActive=true;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     List<Role> roles;
 
     @Override

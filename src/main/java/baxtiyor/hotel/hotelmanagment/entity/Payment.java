@@ -16,7 +16,7 @@ public class Payment extends BaseEntity {
     private Order order;
 
     @ManyToOne
-    private User customer;
+    private User user;
 
     private Double amount;
 
