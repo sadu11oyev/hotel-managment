@@ -1,6 +1,6 @@
 package baxtiyor.hotel.hotelmanagment.controller;
 
-import baxtiyor.hotel.hotelmanagment.dto.forEmail.CodeRequestDto;
+import baxtiyor.hotel.hotelmanagment.dto.forEmail.CoderRequestDto;
 import baxtiyor.hotel.hotelmanagment.dto.forEmail.ReqDto;
 import baxtiyor.hotel.hotelmanagment.dto.forEmail.ResponseDto;
 import baxtiyor.hotel.hotelmanagment.dto.forEmail.TokenDto;
@@ -31,8 +31,9 @@ public class AuthController {
     }
 
     @PostMapping("confirm")
-    public HttpEntity<?> confirmMailCode(@RequestBody CodeRequestDto codeDto, HttpServletRequest request){
-        TokenDto token = authService.confirmMailCodeAndRegister(codeDto.getCode(), request);
+    public HttpEntity<?> confirmMailCode(@RequestBody CoderRequestDto code, HttpServletRequest request){
+        System.out.println("Code: " + code.getCode());
+        TokenDto token = authService.confirmMailCodeAndRegister(code.getCode(), request);
         return ResponseEntity.ok(ResponseDto.builder().message("Authorization token").body(token).build());
     }
 }

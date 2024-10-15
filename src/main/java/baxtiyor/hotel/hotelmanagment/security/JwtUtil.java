@@ -16,6 +16,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 @Component
 public class JwtUtil {
     public String generateToken(UserDetails userDetails) {
@@ -72,8 +74,8 @@ public class JwtUtil {
                 .getPayload();
     }
 
-    public String getEmail(String authorization) {
-        Claims claims = getClaims(authorization);
+    public String getEmail(String token) {
+        Claims claims = getClaims(token);
         return claims.getSubject();
     }
 
@@ -89,9 +91,13 @@ public class JwtUtil {
         return new ReqDto(claims.get("email", String.class),claims.get("password", String.class));
     }
 
-    public List<GrantedAuthority> getRoles(String token) {
+    public List<SimpleGrantedAuthority> getRoles(String token) {
         Claims claims = getClaims(token);
-        String roles = claims.get("roles", String.class);
-        return Arrays.stream(roles.split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        String str = claims.get("roles", String.class);
+        String[] arr= str.split(",");
+        System.out.println(str);
+        System.out.println(claims);
+        return Arrays.stream(arr).map(SimpleGrantedAuthority::new).toList();
+
     }
 }
