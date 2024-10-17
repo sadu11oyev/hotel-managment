@@ -1,6 +1,8 @@
 package baxtiyor.hotel.hotelmanagment.service.impl;
 import baxtiyor.hotel.hotelmanagment.component.MailCodeSender;
+import baxtiyor.hotel.hotelmanagment.config.AuditorAware;
 import baxtiyor.hotel.hotelmanagment.dto.forEmail.ReqDto;
+import baxtiyor.hotel.hotelmanagment.dto.forEmail.ReqInfoDto;
 import baxtiyor.hotel.hotelmanagment.dto.forEmail.TokenDto;
 import baxtiyor.hotel.hotelmanagment.entity.Role;
 import baxtiyor.hotel.hotelmanagment.entity.User;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +34,7 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuditorAware auditorAware;
     @Override
     public TokenDto login(ReqDto loginDto) {
         var auth = new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
@@ -51,7 +55,8 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public TokenDto confirmMailCodeAndRegister(Integer code, HttpServletRequest request) {
-        String confirmToken = request.getHeader("Confirm");
+        String confirm = request.getHeader("Confirm");
+        String confirmToken = confirm.substring(8);
         Integer mailCode = jwtUtil.getMailCode(confirmToken);
         ReqDto reqDto = jwtUtil.getReqDto(confirmToken);
         if (code.equals(mailCode)){
@@ -68,6 +73,17 @@ public class AuthServiceImpl implements AuthService {
             );
         }
         throw new BadCredentialsException("Invalid code try again");
+    }
+
+    @Override
+    public UUID addInfos(ReqInfoDto reqInfoDto) {
+        User user = auditorAware.getAuthenticatedUser();
+        user.setFirstName(reqInfoDto.getFirstName());
+        user.setLastName(reqInfoDto.getLastName());
+        user.setPhoneNumber(reqInfoDto.getPhoneNumber());
+        user.setIsActive(true);
+        userRepository.save(user);
+        return user.getId();
     }
 }
 

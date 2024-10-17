@@ -1,9 +1,8 @@
 package baxtiyor.hotel.hotelmanagment.controller;
 
-import baxtiyor.hotel.hotelmanagment.dto.forEmail.CoderRequestDto;
-import baxtiyor.hotel.hotelmanagment.dto.forEmail.ReqDto;
-import baxtiyor.hotel.hotelmanagment.dto.forEmail.ResponseDto;
-import baxtiyor.hotel.hotelmanagment.dto.forEmail.TokenDto;
+import baxtiyor.hotel.hotelmanagment.config.AuditorAware;
+import baxtiyor.hotel.hotelmanagment.dto.forEmail.*;
+import baxtiyor.hotel.hotelmanagment.entity.User;
 import baxtiyor.hotel.hotelmanagment.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -35,5 +34,10 @@ public class AuthController {
         System.out.println("Code: " + code.getCode());
         TokenDto token = authService.confirmMailCodeAndRegister(code.getCode(), request);
         return ResponseEntity.ok(ResponseDto.builder().message("Authorization token").body(token).build());
+    }
+
+    @PostMapping("addInfos")
+    public HttpEntity<?> addFields(@RequestBody ReqInfoDto reqInfoDto){
+        return ResponseEntity.ok(authService.addInfos(reqInfoDto));
     }
 }
