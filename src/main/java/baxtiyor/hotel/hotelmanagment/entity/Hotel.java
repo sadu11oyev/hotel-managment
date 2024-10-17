@@ -15,4 +15,5 @@ public class Hotel extends BaseEntity {
     private String phoneNumber;
     private String email;
     private String website;
+    private Boolean isDelete;
 }

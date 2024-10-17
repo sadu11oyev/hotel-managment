@@ -24,7 +24,7 @@ public class User extends BaseEntity implements UserDetails {
     @Column(unique = true)
     private String password;
     private String phoneNumber;
-    private Boolean isActive=true;
+    private Boolean isActive;
 
     @ManyToMany(fetch = FetchType.EAGER)
     List<Role> roles;

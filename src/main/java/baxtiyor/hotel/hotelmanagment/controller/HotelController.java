@@ -1,5 +1,6 @@
 package baxtiyor.hotel.hotelmanagment.controller;
 
+import baxtiyor.hotel.hotelmanagment.dto.req.HotelReqDto;
 import baxtiyor.hotel.hotelmanagment.service.HotelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/admin")
-public class AdminController {
+@RequestMapping("/api/hotel")
+public class HotelController {
     private final HotelService hotelService;
+    @GetMapping
+    public ResponseEntity<?> getHotels(){
+        return ResponseEntity.ok(hotelService.getHotels());
+    }
 
-
+    @PostMapping
+    public ResponseEntity<?> addHotel(HotelReqDto reqDto){
+        return ResponseEntity.ok(hotelService.addHotel(reqDto));
+    }
 
 }

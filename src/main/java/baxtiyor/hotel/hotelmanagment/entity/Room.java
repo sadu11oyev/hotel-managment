@@ -14,6 +14,7 @@ public class Room extends BaseEntity {
     private Integer roomNumber;
     private Integer floor;
     private Double price;
+    private Boolean isDelete;
 
     @ManyToOne
     private Hotel hotel;
