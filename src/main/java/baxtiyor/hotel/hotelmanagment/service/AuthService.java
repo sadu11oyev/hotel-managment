@@ -1,8 +1,8 @@
 package baxtiyor.hotel.hotelmanagment.service;
 
 import baxtiyor.hotel.hotelmanagment.dto.forEmail.ReqDto;
-import baxtiyor.hotel.hotelmanagment.dto.forEmail.ReqInfoDto;
 import baxtiyor.hotel.hotelmanagment.dto.forEmail.TokenDto;
+import baxtiyor.hotel.hotelmanagment.dto.req.UserReqDto;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.UUID;
@@ -14,5 +14,5 @@ public interface AuthService {
 
     TokenDto confirmMailCodeAndRegister(Integer code, HttpServletRequest request);
 
-    UUID addInfos(ReqInfoDto reqInfoDto);
+    UUID addInfos(UserReqDto reqDto);
 }

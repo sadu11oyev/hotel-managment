@@ -2,8 +2,8 @@ package baxtiyor.hotel.hotelmanagment.service.impl;
 import baxtiyor.hotel.hotelmanagment.component.MailCodeSender;
 import baxtiyor.hotel.hotelmanagment.config.AuditorAware;
 import baxtiyor.hotel.hotelmanagment.dto.forEmail.ReqDto;
-import baxtiyor.hotel.hotelmanagment.dto.forEmail.ReqInfoDto;
 import baxtiyor.hotel.hotelmanagment.dto.forEmail.TokenDto;
+import baxtiyor.hotel.hotelmanagment.dto.req.UserReqDto;
 import baxtiyor.hotel.hotelmanagment.entity.Role;
 import baxtiyor.hotel.hotelmanagment.entity.User;
 import baxtiyor.hotel.hotelmanagment.entity.enums.RoleName;
@@ -76,11 +76,11 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public UUID addInfos(ReqInfoDto reqInfoDto) {
+    public UUID addInfos(UserReqDto reqDto) {
         User user = auditorAware.getAuthenticatedUser();
-        user.setFirstName(reqInfoDto.getFirstName());
-        user.setLastName(reqInfoDto.getLastName());
-        user.setPhoneNumber(reqInfoDto.getPhoneNumber());
+        user.setFirstName(reqDto.getFirstName());
+        user.setLastName(reqDto.getLastName());
+        user.setPhoneNumber(reqDto.getPhoneNumber());
         user.setIsActive(true);
         userRepository.save(user);
         return user.getId();
