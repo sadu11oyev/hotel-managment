@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -17,7 +18,6 @@ import java.util.UUID;
 public class HotelServiceImpl implements HotelService {
     private final HotelRepository repository;
     private final HotelMapper hotelMapper;
-
     @Override
     public List<HotelResDto> getHotels() {
         List<Hotel> hotelList = repository.findActiveHotels();
@@ -30,5 +30,33 @@ public class HotelServiceImpl implements HotelService {
         hotel.setIsDelete(false);
         repository.save(hotel);
         return hotel.getId();
+    }
+
+    @Override
+    public Object editHotel(UUID id, HotelReqDto reqDto) {
+        Optional<Hotel> opt = repository.findById(id);
+        if (opt.isPresent()){
+            Hotel currentHotel = opt.get();
+            currentHotel.setName(reqDto.getName());
+            currentHotel.setAddress(reqDto.getAddress());
+            currentHotel.setWebsite(reqDto.getWebsite());
+            currentHotel.setPhoneNumber(reqDto.getPhoneNumber());
+            repository.save(currentHotel);
+            return hotelMapper.toDto(currentHotel);
+        }else {
+            return "Hotel not found";
+        }
+    }
+
+    @Override
+    public Object deleteHotel(UUID id) {
+        Optional<Hotel> opt = repository.findById(id);
+        if (opt.isPresent()){
+            Hotel currentHotel = opt.get();
+            repository.deleteByIdAndRooms(id);
+            return hotelMapper.toDto(currentHotel);
+        }else {
+            return "Hotel not found";
+        }
     }
 }

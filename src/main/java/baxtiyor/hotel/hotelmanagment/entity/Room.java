@@ -25,7 +25,4 @@ public class Room extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private RoomStatus statusRoom;
 
-
-
-
 }

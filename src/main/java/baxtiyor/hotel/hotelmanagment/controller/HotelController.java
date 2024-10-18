@@ -4,10 +4,9 @@ import baxtiyor.hotel.hotelmanagment.dto.req.HotelReqDto;
 import baxtiyor.hotel.hotelmanagment.service.HotelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +21,15 @@ public class HotelController {
     @PostMapping
     public ResponseEntity<?> addHotel(HotelReqDto reqDto){
         return ResponseEntity.ok(hotelService.addHotel(reqDto));
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<?> editHotel(@PathVariable UUID id, HotelReqDto reqDto){
+        return ResponseEntity.ok(hotelService.editHotel(id,reqDto));
+    }
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteHotel(@PathVariable UUID id){
+        return ResponseEntity.ok(hotelService.deleteHotel(id));
     }
 
 }

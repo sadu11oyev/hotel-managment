@@ -17,7 +17,5 @@ public class HotelReqDto implements Serializable {
     @NotNull
     String phoneNumber;
     @NotNull
-    String email;
-    @NotNull
     String website;
 }

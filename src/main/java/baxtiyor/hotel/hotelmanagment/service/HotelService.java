@@ -10,4 +10,8 @@ public interface HotelService {
     List<HotelResDto> getHotels();
 
     UUID addHotel(HotelReqDto reqDto);
+
+    Object editHotel(UUID id, HotelReqDto reqDto);
+
+    Object deleteHotel(UUID id);
 }

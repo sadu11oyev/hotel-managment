@@ -14,6 +14,5 @@ public class HotelResDto implements Serializable {
     String name;
     String address;
     String phoneNumber;
-    String email;
     String website;
 }
