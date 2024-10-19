@@ -15,6 +15,8 @@ import java.util.UUID;
 @RequestMapping("/api/hotel")
 public class HotelController {
     private final HotelService hotelService;
+
+    
     @GetMapping
     public ResponseEntity<?> getHotels(@RequestParam(defaultValue = "0") int page,
                                        @RequestParam(defaultValue = "5")int size){
@@ -22,16 +24,17 @@ public class HotelController {
         return ResponseEntity.ok(hotels);
     }
 
-    @PostMapping
+    @PostMapping("add")
     public ResponseEntity<?> addHotel(HotelReqDto reqDto){
         return ResponseEntity.ok(hotelService.addHotel(reqDto));
     }
 
-    @PutMapping("{id}")
+    @PutMapping("edit/{id}")
     public ResponseEntity<?> editHotel(@PathVariable UUID id, HotelReqDto reqDto){
         return ResponseEntity.ok(hotelService.editHotel(id,reqDto));
     }
-    @DeleteMapping("{id}")
+
+    @DeleteMapping("delete/{id}")
     public ResponseEntity<?> deleteHotel(@PathVariable UUID id){
         return ResponseEntity.ok(hotelService.deleteHotel(id));
     }

@@ -19,17 +19,17 @@ public class RoomController {
         return ResponseEntity.ok(roomService.getRoomsByHotelId(hotelId));
     }
 
-    @PostMapping()
+    @PostMapping("add")
     public ResponseEntity<?> addRoom(RoomReqDto reqDto){
         return ResponseEntity.ok(roomService.addRoom(reqDto));
     }
 
-    @PutMapping("{id}")
+    @PutMapping("edit/{id}")
     public ResponseEntity<?> editRoom(@PathVariable UUID id, RoomReqDto reqDto){
         return ResponseEntity.ok(roomService.editRoom(id,reqDto));
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("delete/{id}")
     public ResponseEntity<?> deleteRoom(@PathVariable UUID id){
         return ResponseEntity.ok(roomService.deleteRoom(id));
     }

@@ -15,9 +15,6 @@ public class Payment extends BaseEntity {
     @OneToOne
     private Order order;
 
-    @ManyToOne
-    private User user;
-
     private Double amount;
 
     @Enumerated(EnumType.STRING)

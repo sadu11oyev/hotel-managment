@@ -14,7 +14,6 @@ import java.util.UUID;
 public class PaymentResDto implements Serializable {
     UUID id;
     UUID orderId;
-    UUID userId;
     Double amount;
     PaymentType paymentType;
     LocalDateTime paymentDate;

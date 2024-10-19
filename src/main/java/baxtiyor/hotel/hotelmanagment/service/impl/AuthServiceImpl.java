@@ -81,7 +81,6 @@ public class AuthServiceImpl implements AuthService {
         user.setFirstName(reqDto.getFirstName());
         user.setLastName(reqDto.getLastName());
         user.setPhoneNumber(reqDto.getPhoneNumber());
-        user.setIsActive(true);
         userRepository.save(user);
         return user.getId();
     }

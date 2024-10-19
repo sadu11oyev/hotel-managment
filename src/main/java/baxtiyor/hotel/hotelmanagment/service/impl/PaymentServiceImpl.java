@@ -24,7 +24,6 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public PaymentResDto addPayment(PaymentReqDto reqDto) {
         Payment payment = mapper.toEntity(reqDto);
-        payment.setUser(auditorAware.getAuthenticatedUser());
         payment.setPaymentDate(LocalDateTime.now());
         repository.save(payment);
         return mapper.toResDto(payment);

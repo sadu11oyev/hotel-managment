@@ -20,7 +20,7 @@ public class PaymentController {
         return ResponseEntity.ok(paymentService.getAll());
     }
 
-    @PostMapping
+    @PostMapping("add")
     public ResponseEntity<?> addPayment(PaymentReqDto reqDto){
         return ResponseEntity.ok(paymentService.addPayment(reqDto));
     }

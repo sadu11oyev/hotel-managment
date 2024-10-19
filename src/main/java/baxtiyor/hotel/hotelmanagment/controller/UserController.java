@@ -17,12 +17,12 @@ public class UserController {
     @GetMapping
     public ResponseEntity<?> getUser(){return ResponseEntity.ok(userService.getUser());}
 
-    @PutMapping
+    @PutMapping("edit")
     public ResponseEntity<?> editUser(UserReqDto reqDto){
         return ResponseEntity.ok(userService.editUser(reqDto));
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("delete/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable UUID id){
         return ResponseEntity.ok(userService.deleteUser(id));
     }
