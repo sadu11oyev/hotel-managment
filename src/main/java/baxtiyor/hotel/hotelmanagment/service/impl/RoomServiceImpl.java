@@ -1,6 +1,8 @@
 package baxtiyor.hotel.hotelmanagment.service.impl;
 
 import baxtiyor.hotel.hotelmanagment.dto.req.RoomReqDto;
+import baxtiyor.hotel.hotelmanagment.dto.res.HotelResDto;
+import baxtiyor.hotel.hotelmanagment.dto.res.RoomResDto;
 import baxtiyor.hotel.hotelmanagment.entity.Hotel;
 import baxtiyor.hotel.hotelmanagment.entity.Room;
 import baxtiyor.hotel.hotelmanagment.entity.enums.RoomStatus;
@@ -9,6 +11,10 @@ import baxtiyor.hotel.hotelmanagment.repo.HotelRepository;
 import baxtiyor.hotel.hotelmanagment.repo.RoomRepository;
 import baxtiyor.hotel.hotelmanagment.service.RoomService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,19 +29,14 @@ public class RoomServiceImpl implements RoomService {
     private final HotelRepository hotelRepo;
 
     @Override
-    public Object getRoomsByHotelId(UUID hotelId) {
-        Optional<Hotel> opt = hotelRepo.findById(hotelId);
-        if (opt.isPresent()){
-            Hotel hotel = opt.get();
-            if (!hotel.getIsDelete()){
-                List<Room> rooms = repository.findAllByHotelId(hotel.getId());
-                return rooms.stream().map(roomMapper::toResDto).toList();
-            }else {
-                return "Hotel is delete";
-            }
-        }else {
-            return "Hotel not found";
-        }
+    public Page<RoomResDto> getRoomsByHotelId(int page, int size, UUID hotelId) {
+        Pageable pageable = PageRequest.of(page,size);
+        Hotel hotel = hotelRepo.findById(hotelId).get();
+        List<Room> rooms = repository.findAllByHotelId(hotel.getId());
+        List<RoomResDto> roomResDtos = rooms
+                .stream().map(roomMapper::toResDto)
+                .toList();
+        return new PageImpl<>(roomResDtos, pageable, roomResDtos.size());
     }
 
     @Override

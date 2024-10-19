@@ -10,6 +10,10 @@ import baxtiyor.hotel.hotelmanagment.mapper.PaymentMapper;
 import baxtiyor.hotel.hotelmanagment.repo.PaymentRepository;
 import baxtiyor.hotel.hotelmanagment.service.PaymentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -33,9 +37,10 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public List<PaymentResDto> getAll() {
+    public Page<PaymentResDto> getAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page,size);
         User user = auditorAware.getAuthenticatedUser();
-        List<Payment> payments = new ArrayList<>();
+        List<Payment> payments;
         boolean isAdmin = user.getRoles().stream()
                 .anyMatch(role -> role.getRoleName().equals(RoleName.ROLE_ADMIN));
         if (isAdmin){
@@ -43,6 +48,7 @@ public class PaymentServiceImpl implements PaymentService {
         }else {
             payments = repository.findUserPayments(user.getId());
         }
-        return payments.stream().map(mapper::toResDto).toList();
+        List<PaymentResDto> paymentResDtos = payments.stream().map(mapper::toResDto).toList();
+        return new PageImpl<>(paymentResDtos, pageable, paymentResDtos.size());
     }
 }

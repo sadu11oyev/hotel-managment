@@ -1,6 +1,5 @@
 package baxtiyor.hotel.hotelmanagment.entity;
 
-import baxtiyor.hotel.hotelmanagment.entity.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,8 +23,5 @@ public class Order extends BaseEntity {
     private Double totalPrice;
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
-
-    @Enumerated(EnumType.STRING)
-    private OrderStatus status;
 
 }

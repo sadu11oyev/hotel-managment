@@ -25,12 +25,12 @@ public class HotelServiceImpl implements HotelService {
     @Override
     public Page<HotelResDto> getHotels(int page, int size) {
         Pageable pageable = PageRequest.of(page,size);
-        Page<Hotel> hotelPage = repository.findActiveHotels(pageable);
+        List<Hotel> hotelPage = repository.findActiveHotels();
         List<HotelResDto> hotelResDtoList = hotelPage
                 .stream()
                 .map(hotelMapper::toDto)
                 .toList();
-        return new PageImpl<>(hotelResDtoList, pageable, hotelPage.getTotalElements());
+        return new PageImpl<>(hotelResDtoList, pageable, hotelPage.size());
     }
 
     @Override

@@ -8,12 +8,13 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
 public interface HotelRepository extends JpaRepository<Hotel, UUID> {
-    @Query(nativeQuery = true,value = "select * from hotel where is_delete:=false LIMIT :#{#pageable.pageSize} OFFSET :#{#pageable.offset}")
-    Page<Hotel> findActiveHotels(Pageable pageable);
+    @Query(nativeQuery = true,value = "select * from hotel where is_delete:=false")
+    List<Hotel> findActiveHotels();
 
 
     @Modifying
