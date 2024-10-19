@@ -34,10 +34,4 @@ public class UserServiceImpl implements UserService {
         return userMapper.toResDto(user);
     }
 
-    @Override
-    public String deleteUser(UUID id) {
-        User user = repository.findById(id).get();
-        repository.delete(user);
-        return "User deleted";
-    }
 }

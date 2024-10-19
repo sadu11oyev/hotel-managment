@@ -4,6 +4,7 @@ import baxtiyor.hotel.hotelmanagment.dto.req.RoomReqDto;
 import baxtiyor.hotel.hotelmanagment.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -11,9 +12,11 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/room")
+@PreAuthorize("hasAnyRole('ADMIN')")
 public class RoomController {
     private final RoomService roomService;
 
+    @PreAuthorize("hasAnyRole('USER')")
     @GetMapping("{hotelId}")
     public ResponseEntity<?> getRooms(@PathVariable UUID hotelId){
         return ResponseEntity.ok(roomService.getRoomsByHotelId(hotelId));

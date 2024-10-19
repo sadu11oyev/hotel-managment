@@ -11,5 +11,4 @@ public interface UserService {
 
     UserResDto editUser(UserReqDto reqDto);
 
-    String deleteUser(UUID id);
 }
