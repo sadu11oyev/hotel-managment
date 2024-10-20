@@ -2,6 +2,7 @@ package baxtiyor.hotel.hotelmanagment.controller;
 
 import baxtiyor.hotel.hotelmanagment.dto.req.RoomReqDto;
 import baxtiyor.hotel.hotelmanagment.dto.res.RoomResDto;
+import baxtiyor.hotel.hotelmanagment.entity.enums.RoomType;
 import baxtiyor.hotel.hotelmanagment.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,6 +27,15 @@ public class RoomController {
         Page<RoomResDto> rooms = roomService.getRoomsByHotelId(page,size,hotelId);
         return ResponseEntity.ok(rooms);
     }
+    @PreAuthorize("hasAnyRole('USER')")
+    @GetMapping("{hotelId}/{type}")
+    public ResponseEntity<?> getAllByType(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "5")int size,
+                                    @PathVariable UUID hotelId,@RequestParam RoomType type ){
+        Page<RoomResDto> rooms = roomService.getRoomsByHotelIdAndType(page,size,hotelId,type);
+        return ResponseEntity.ok(rooms);
+    }
+
 
 
     @PostMapping("add")

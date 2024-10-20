@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/payment")
@@ -26,6 +28,15 @@ public class PaymentController {
     @PostMapping("add")
     public ResponseEntity<?> addPayment(PaymentReqDto reqDto){
         return ResponseEntity.ok(paymentService.addPayment(reqDto));
+    }
+
+    @PutMapping("edit")
+    public ResponseEntity<?> editPayment(@PathVariable UUID paymentId,PaymentReqDto reqDto){
+        return ResponseEntity.ok(paymentService.editPayment(paymentId,reqDto));
+    }
+    @DeleteMapping("delete")
+    public ResponseEntity<?> deletePayment(@PathVariable UUID id){
+        return ResponseEntity.ok(paymentService.delete(id));
     }
 
 

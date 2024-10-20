@@ -48,7 +48,7 @@ public class HotelServiceImpl implements HotelService {
             Hotel currentHotel = opt.get();
             currentHotel.setName(reqDto.getName());
             currentHotel.setAddress(reqDto.getAddress());
-            currentHotel.setWebsite(reqDto.getWebsite());
+            currentHotel.setEmail(reqDto.getWebsite());
             currentHotel.setPhoneNumber(reqDto.getPhoneNumber());
             repository.save(currentHotel);
             return hotelMapper.toDto(currentHotel);

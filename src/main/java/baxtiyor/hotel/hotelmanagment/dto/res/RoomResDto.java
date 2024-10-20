@@ -1,6 +1,4 @@
 package baxtiyor.hotel.hotelmanagment.dto.res;
-
-import baxtiyor.hotel.hotelmanagment.entity.enums.RoomStatus;
 import baxtiyor.hotel.hotelmanagment.entity.enums.RoomType;
 import lombok.Value;
 
@@ -18,5 +16,4 @@ public class RoomResDto implements Serializable {
     Double price;
     UUID hotelId;
     RoomType typeRoom;
-    RoomStatus statusRoom;
 }

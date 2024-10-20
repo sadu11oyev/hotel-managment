@@ -1,14 +1,15 @@
 package baxtiyor.hotel.hotelmanagment.entity;
 
-import baxtiyor.hotel.hotelmanagment.entity.enums.RoomStatus;
 import baxtiyor.hotel.hotelmanagment.entity.enums.RoomType;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "room")
 public class Room extends BaseEntity {
     private Integer roomNumber;
@@ -21,8 +22,5 @@ public class Room extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private RoomType typeRoom;
-
-    @Enumerated(EnumType.STRING)
-    private RoomStatus statusRoom;
 
 }

@@ -1,11 +1,10 @@
 package baxtiyor.hotel.hotelmanagment.service.impl;
 
 import baxtiyor.hotel.hotelmanagment.dto.req.RoomReqDto;
-import baxtiyor.hotel.hotelmanagment.dto.res.HotelResDto;
 import baxtiyor.hotel.hotelmanagment.dto.res.RoomResDto;
 import baxtiyor.hotel.hotelmanagment.entity.Hotel;
 import baxtiyor.hotel.hotelmanagment.entity.Room;
-import baxtiyor.hotel.hotelmanagment.entity.enums.RoomStatus;
+import baxtiyor.hotel.hotelmanagment.entity.enums.RoomType;
 import baxtiyor.hotel.hotelmanagment.mapper.RoomMapper;
 import baxtiyor.hotel.hotelmanagment.repo.HotelRepository;
 import baxtiyor.hotel.hotelmanagment.repo.RoomRepository;
@@ -43,7 +42,6 @@ public class RoomServiceImpl implements RoomService {
     public UUID addRoom(RoomReqDto reqDto) {
         Room room = roomMapper.toEntity(reqDto);
         room.setIsDelete(false);
-        room.setStatusRoom(RoomStatus.AVAILABLE);
         repository.save(room);
         return room.getId();
     }
@@ -76,5 +74,16 @@ public class RoomServiceImpl implements RoomService {
         }else {
             return "Room not found";
         }
+    }
+
+    @Override
+    public Page<RoomResDto> getRoomsByHotelIdAndType(int page, int size, UUID hotelId, RoomType type) {
+        Pageable pageable = PageRequest.of(page,size);
+        Hotel hotel = hotelRepo.findById(hotelId).get();
+        List<Room> rooms = repository.findAllByHotelIdAndType(hotel.getId(),type);
+        List<RoomResDto> roomResDtos = rooms
+                .stream().map(roomMapper::toResDto)
+                .toList();
+        return new PageImpl<>(roomResDtos, pageable, roomResDtos.size());
     }
 }

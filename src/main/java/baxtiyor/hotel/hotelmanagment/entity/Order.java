@@ -1,19 +1,20 @@
 package baxtiyor.hotel.hotelmanagment.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "orders")
 public class Order extends BaseEntity {
-    @ManyToOne
-    private Hotel hotel;
-
     @ManyToOne
     private Room room;
 
@@ -21,7 +22,9 @@ public class Order extends BaseEntity {
     private User user;
 
     private Double totalPrice;
-    private LocalDate checkInDate;
-    private LocalDate checkOutDate;
+    private LocalDate checkIn;
+    private LocalDate checkOut;
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
 }
