@@ -22,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
@@ -53,6 +54,7 @@ public class AuthServiceImpl implements AuthService {
         return jwtUtil.generateConfirmToken(reqDto,code);
     }
 
+
     @Override
     public TokenDto confirmMailCodeAndRegister(Integer code, HttpServletRequest request) {
         String confirm = request.getHeader("Confirm");
@@ -74,6 +76,21 @@ public class AuthServiceImpl implements AuthService {
         }
         throw new BadCredentialsException("Invalid code try again");
     }
+    @Override
+    public TokenDto confirmMailcodeAndRemovePassword(Integer code, HttpServletRequest request) {
+        String recover = request.getHeader("Forgot");
+        String recoverToken = recover.substring(7);
+        Integer mailCode = jwtUtil.getMailCode(recoverToken);
+        String email = jwtUtil.currentEmail(recoverToken);
+        if (code.equals(mailCode)){
+            User currentUser = userRepository.findByUsername(email);
+            return new TokenDto(
+                    "Bearer "+jwtUtil.generateToken(currentUser),
+                    "Bearer "+jwtUtil.generateRefreshToken(currentUser)
+            );
+        }
+        throw new BadCredentialsException("Invalid code try again");
+    }
 
     @Override
     public UUID addInfos(UserReqDto reqDto) {
@@ -84,6 +101,21 @@ public class AuthServiceImpl implements AuthService {
         userRepository.save(user);
         return user.getId();
     }
+
+    @Override
+    public String forgotPassword(String email) {
+        Optional<User> opt = userRepository.findUserByEmail(email);
+        if (opt.isPresent()){
+            Integer code=new Random().nextInt(1000,10000);
+            mailCodeSender.sendMessage(code,email);
+            return jwtUtil.generateForgotToken(email,code);
+        }else {
+            return "There is no such user";
+        }
+    }
+
+
+
 }
 
 

@@ -16,7 +16,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.toList;
 
 @Component
 public class JwtUtil {
@@ -45,6 +44,15 @@ public class JwtUtil {
                 .claim("mailCode",code)
                 .claim("email",reqDto.getEmail())
                 .claim("password",reqDto.getPassword())
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis()+1000*60*10))
+                .signWith(getKey())
+                .compact();
+    }
+    public String generateForgotToken(String email, Integer code) {
+        return Jwts.builder()
+                .claim("mailCode",code)
+                .claim("email",email)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis()+1000*60*10))
                 .signWith(getKey())
@@ -79,8 +87,6 @@ public class JwtUtil {
         return claims.getSubject();
     }
 
-
-
     public Integer getMailCode(String confirm){
         Claims claims = getClaims(confirm);
         return claims.get("mailCode",Integer.class);
@@ -89,6 +95,10 @@ public class JwtUtil {
     public ReqDto getReqDto(String confirm){
         Claims claims = getClaims(confirm);
         return new ReqDto(claims.get("email", String.class),claims.get("password", String.class));
+    }
+    public String currentEmail(String recoverToken) {
+        Claims claims = getClaims(recoverToken);
+        return  claims.get("email", String.class);
     }
 
     public List<SimpleGrantedAuthority> getRoles(String token) {

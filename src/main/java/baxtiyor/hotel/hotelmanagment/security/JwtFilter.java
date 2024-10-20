@@ -23,9 +23,10 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorization = request.getHeader("Authorization");
         String confirm=request.getHeader("Confirm");
+        String forgot=request.getHeader("Forgot");
         if (authorization != null && authorization.startsWith("Bearer ")
-                || !(request.getRequestURI().contains("auth") || request.getRequestURI().contains("/swagger") || request.getRequestURI().contains("/v3")
-        )) {
+                || !(request.getRequestURI().contains("auth") || request.getRequestURI().contains("/swagger") || request.getRequestURI().contains("/v3")))
+        {
             assert authorization != null;
             String token=authorization.substring(7);
             if (jwtUtil.isValid(token)){
@@ -34,10 +35,19 @@ public class JwtFilter extends OncePerRequestFilter {
                 var usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(email, null, roles);
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
-        } else if (confirm!=null&&confirm.startsWith("Confirm ")) {
+        }
+        else if (confirm!=null&&confirm.startsWith("Confirm ")) {
             String token=confirm.substring(8);
             if (jwtUtil.isValid(token)){
                 String email=jwtUtil.getEmail(token);
+                var usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(email, null, new ArrayList<>());
+                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            }
+        }
+        else if (forgot!=null&&forgot.startsWith("Forgot ")) {
+            String token=forgot.substring(7);
+            if (jwtUtil.isValid(token)){
+                String email=jwtUtil.currentEmail(token);
                 var usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(email, null, new ArrayList<>());
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }

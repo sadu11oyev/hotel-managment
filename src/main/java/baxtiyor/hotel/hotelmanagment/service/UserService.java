@@ -11,4 +11,5 @@ public interface UserService {
 
     UserResDto editUser(UserReqDto reqDto);
 
+    UserResDto changePassword(String password);
 }

@@ -15,4 +15,8 @@ public interface AuthService {
     TokenDto confirmMailCodeAndRegister(Integer code, HttpServletRequest request);
 
     UUID addInfos(UserReqDto reqDto);
+
+    String forgotPassword(String email);
+
+    TokenDto confirmMailcodeAndRemovePassword(Integer code, HttpServletRequest request);
 }

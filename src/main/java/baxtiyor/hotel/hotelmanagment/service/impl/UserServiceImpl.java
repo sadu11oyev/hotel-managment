@@ -8,6 +8,7 @@ import baxtiyor.hotel.hotelmanagment.mapper.UserMapper;
 import baxtiyor.hotel.hotelmanagment.repo.UserRepository;
 import baxtiyor.hotel.hotelmanagment.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -18,6 +19,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository repository;
     private final AuditorAware auditorAware;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserResDto getUser() {
@@ -31,6 +33,15 @@ public class UserServiceImpl implements UserService {
         user.setFirstName(reqDto.getFirstName());
         user.setLastName(reqDto.getLastName());
         user.setPhoneNumber(reqDto.getPhoneNumber());
+        repository.save(user);
+        return userMapper.toResDto(user);
+    }
+
+    @Override
+    public UserResDto changePassword(String password) {
+       User user = auditorAware.getAuthenticatedUser();
+       user.setPassword(passwordEncoder.encode(password));
+       repository.save(user);
         return userMapper.toResDto(user);
     }
 
