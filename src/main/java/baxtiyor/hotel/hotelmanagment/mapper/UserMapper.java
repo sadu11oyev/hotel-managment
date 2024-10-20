@@ -9,12 +9,14 @@ import org.mapstruct.*;
 public interface UserMapper {
     User toEntity(UserReqDto userReqDto);
 
-    UserResDto toResDto(User user);
+    UserReqDto toDto(User user);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     User partialUpdate(UserReqDto userReqDto, @MappingTarget User user);
 
     User toEntity(UserResDto userResDto);
+
+    UserResDto toResDto(User user);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     User partialUpdate(UserResDto userResDto, @MappingTarget User user);

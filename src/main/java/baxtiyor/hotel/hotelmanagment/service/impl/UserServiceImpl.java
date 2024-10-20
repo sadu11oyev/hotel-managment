@@ -6,9 +6,7 @@ import baxtiyor.hotel.hotelmanagment.dto.req.UserReqDto;
 import baxtiyor.hotel.hotelmanagment.dto.res.OrderResDto;
 import baxtiyor.hotel.hotelmanagment.dto.res.UserResDto;
 import baxtiyor.hotel.hotelmanagment.entity.Order;
-import baxtiyor.hotel.hotelmanagment.entity.Role;
 import baxtiyor.hotel.hotelmanagment.entity.User;
-import baxtiyor.hotel.hotelmanagment.entity.enums.RoleName;
 import baxtiyor.hotel.hotelmanagment.mapper.OrderMapper;
 import baxtiyor.hotel.hotelmanagment.mapper.UserMapper;
 import baxtiyor.hotel.hotelmanagment.repo.OrderRepository;
@@ -25,7 +23,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service

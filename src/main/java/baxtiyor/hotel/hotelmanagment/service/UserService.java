@@ -6,8 +6,6 @@ import baxtiyor.hotel.hotelmanagment.dto.res.UserResDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 
-import java.util.UUID;
-
 public interface UserService {
     UserResDto getUser();
 
