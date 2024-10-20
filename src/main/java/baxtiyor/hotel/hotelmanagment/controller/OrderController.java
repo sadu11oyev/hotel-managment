@@ -1,12 +1,15 @@
 package baxtiyor.hotel.hotelmanagment.controller;
 
+import baxtiyor.hotel.hotelmanagment.dto.req.DownloadOrderDto;
+import baxtiyor.hotel.hotelmanagment.dto.req.OrderReqDto;
+import baxtiyor.hotel.hotelmanagment.dto.req.RateDto;
 import baxtiyor.hotel.hotelmanagment.service.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,10 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
     private final OrderService orderService;
 
-    public ResponseEntity<?> getAll(@RequestParam(defaultValue = "0") int page,
-                                    @RequestParam(defaultValue = "5")int size){
-        return null;
+    @PostMapping()
+    public HttpEntity<?> makeOrder(@RequestBody OrderReqDto orderReqDto){
+        return orderService.makeOrder(orderReqDto);
+    }
 
+    @PostMapping("rate/{id}")
+    public HttpEntity<?> rateOrder(@PathVariable UUID id, @RequestBody RateDto rateDto){
+        return orderService.rateOrder(id,rateDto);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("download")
+    public HttpEntity<?> downloadOrders(@RequestBody DownloadOrderDto downloadOrderDto){
+        return orderService.downloadOrderFile(downloadOrderDto);
     }
 
 

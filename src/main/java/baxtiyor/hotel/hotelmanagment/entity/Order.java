@@ -24,6 +24,8 @@ public class Order extends BaseEntity {
     private Double totalPrice;
     private LocalDate checkIn;
     private LocalDate checkOut;
+    private Integer rate;
+    private String comment;
     @CreationTimestamp
     private LocalDateTime createdAt;
 
