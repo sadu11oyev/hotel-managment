@@ -36,6 +36,7 @@ public class Runner implements CommandLineRunner {
                     .email("acer@gmail.com")
                     .firstName("ACER")
                     .lastName("ACER")
+                    .phoneNumber("+998999999999")
                     .password(passwordEncoder.encode("root123"))
                     .roles(List.of(roleAdmin))
                     .build();
@@ -43,6 +44,7 @@ public class Runner implements CommandLineRunner {
                     .email("inter@gmail.com")
                     .firstName("INTEL")
                     .lastName("INTER")
+                    .phoneNumber("+998999999999")
                     .password(passwordEncoder.encode("root123"))
                     .roles(List.of(roleUser))
                     .build();
