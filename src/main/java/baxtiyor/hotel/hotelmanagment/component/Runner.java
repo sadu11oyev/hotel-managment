@@ -33,16 +33,16 @@ public class Runner implements CommandLineRunner {
             roleRepository.save(roleAdmin);
             roleRepository.save(roleUser);
             User admin=User.builder()
-                    .email("a@gmail.com")
-                    .firstName("A")
-                    .lastName("AA")
+                    .email("acer@gmail.com")
+                    .firstName("ACER")
+                    .lastName("ACER")
                     .password(passwordEncoder.encode("root123"))
                     .roles(List.of(roleAdmin))
                     .build();
             User user=User.builder()
-                    .email("b@gmail.com")
-                    .firstName("B")
-                    .lastName("BB")
+                    .email("inter@gmail.com")
+                    .firstName("INTEL")
+                    .lastName("INTER")
                     .password(passwordEncoder.encode("root123"))
                     .roles(List.of(roleUser))
                     .build();
@@ -51,9 +51,9 @@ public class Runner implements CommandLineRunner {
 
             Hotel hotel=Hotel.builder()
                     .email("Hotel@gmail.com")
-                    .address("Brbalo brbalo")
-                    .phoneNumber("+998977777777")
-                    .name("Yulduz")
+                    .address("Tashkent")
+                    .phoneNumber("+998999999999")
+                    .name("Oqshom")
                     .build();
             hotelRepository.save(hotel);
 
